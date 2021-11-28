@@ -49,8 +49,26 @@
       <h2>Esperando a otro jugador...</h2>
     </div>
   </div>
+
  
-  <div class="container d-flex flex-row game-panel mt-4">
+  <div class="container d-flex flex-row mt-4">
+
+
+    <div class="container chat border">
+
+      <div class="mensajes">
+        <div class="mensaje row p-2 m-2">holi</div>
+      </div>
+
+      <div class="input-box">
+        <div>
+          <input type="text" class="form-control" id="mensajeInput" placeholder="Escribe aquí...">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container d-flex flex-row game-panel mt-4">
     
     <div class="player-table">
       <div class="ficha"
@@ -82,6 +100,11 @@
            :class="{'selected' : ficha.selected, 'red' : ficha.player == 1, 'blue' : ficha.player == 2}">
            </div>
     </div>
+
+  </div>
+
+
+
   </div>
 
 </div>

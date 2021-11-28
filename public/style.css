@@ -61,3 +61,15 @@ html, body {
 .botonera > * {
   margin-right: 10px;
 }
+
+
+.mensajes {
+  overflow-y: auto;
+  height: 90%;
+}
+
+.mensaje {
+  border-radius: 10px;
+  background-color: white !important;
+}
+
