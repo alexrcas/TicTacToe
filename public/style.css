@@ -1,0 +1,63 @@
+html, body {
+  background-color: #DCF6F9;
+}
+
+.celda {
+  height: 130px;
+  width: 130px;
+  border: solid 1px #D3D3D9;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tablero {
+  width: 520px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-table {
+  height: 450px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-panel {
+  align-items: center;
+  justify-content: center;
+  width: 1000px;
+}
+
+.ficha {
+  height: 50px;
+  width: 50px;
+  margin: 5px;
+  border-radius: 50%;
+}
+
+.ficha:hover {
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #F5D547 !important;
+}
+
+.red {
+  background-color: #DE1759;
+}
+
+.blue {
+  background-color: #345995;
+}
+
+.botonera > * {
+  margin-right: 10px;
+}
