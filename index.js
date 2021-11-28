@@ -10,8 +10,10 @@ const path = require('path');
 app.use(cors());
 app.use(express.static('public'));
 
+const port = process.env.PORT || 80
 
-server.listen(3000, () => { console.log('Server listening at 3000!'); })
+
+server.listen(port, () => { console.log(`Server listening at ${port}!`); })
 
 
 app.get('/', (req, res) => {
