@@ -17,6 +17,7 @@
       <div class="botonera">
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Instrucciones</button>
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#connectModal">Conectar</button>
+        <button v-if="jugadorAsignado != 0" class="btn btn-warning" @click="reiniciar()">Reiniciar Partida</button>
       </div>
   </div>
   
@@ -57,7 +58,10 @@
     <div class="container chat border">
 
       <div class="mensajes">
-        <div v-for="mensaje in mensajes" :class="{'mensaje mensaje-red' : mensaje.jugador == 1, 'mensaje mensaje-blue' : mensaje.jugador == 2}">
+        <div v-for="mensaje in mensajes"
+        :class="{'mensaje mensaje-red' : mensaje.jugador == 1,
+        'mensaje mensaje-blue' : mensaje.jugador == 2,
+        'mensaje-system': mensaje.jugador === 0}">
           <p>{{mensaje.mensaje}}</p>
         </div>
       </div>

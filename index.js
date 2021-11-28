@@ -72,4 +72,9 @@ io.on('connection', socket => {
         io.in(message.sala).emit('chat-message', {jugador: message.jugador, mensaje: message.mensaje});
     });
 
+    socket.on('reset-game', async(message) => {
+        io.to(message.sala).emit('reset-game')
+        io.in(message.sala).emit('chat-message', {mensaje: `El jugador ${message.jugador} ha reiniciado la partida`, jugador: 0})
+    })
+
 })

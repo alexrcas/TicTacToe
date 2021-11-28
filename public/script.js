@@ -112,6 +112,7 @@ const app = new Vue({
       this.mensajes = [];
       this.crearFichas();
       this.crearCeldas();
+      this.socket.emit('reset-game', {sala: this.codigoSala, jugador: this.colorJugadorAsignado[this.jugadorAsignado - 1]})
     },
     
     crearSala: function() {
@@ -136,7 +137,6 @@ const app = new Vue({
       if (this.mensaje === '') {
         return;
       }
-
       this.socket.emit('chat-message', {sala: this.salaActiva, mensaje: this.mensaje, jugador: this.jugadorAsignado})
       this.mensaje = '';
     }
@@ -193,6 +193,14 @@ const app = new Vue({
 
     this.socket.on('chat-message', mensaje => {
       this.mensajes.push({jugador: mensaje.jugador, mensaje: mensaje.mensaje});
+    });
+
+    this.socket.on('reset-game', () => {
+      this.fichas = [];
+      this.celdas = [];
+      this.crearFichas();
+      this.crearCeldas();
+      this.turnoActual = 1;
     })
 
 
