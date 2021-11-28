@@ -62,14 +62,33 @@ html, body {
   margin-right: 10px;
 }
 
-
 .mensajes {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 90%;
 }
 
-.mensaje {
-  border-radius: 10px;
-  background-color: white !important;
+.chat {
+  overflow: hidden !important;
+  max-height: 470px!important;
+  height: 470px;
+  padding-top: 5px;
 }
 
+.mensaje {
+  overflow-wrap: break-word;
+}
+
+.mensaje-red > * {
+  background-color: #DE1759 !important;
+  border-radius: 10px;
+  color: white;
+  padding: 8px;
+}
+
+.mensaje-blue > * {
+  background-color: #345995; !important;
+  border-radius: 10px;
+  color: white;
+  padding: 8px;
+}

@@ -19,7 +19,8 @@ var Celda = (function () {
 const app = new Vue({
   el: '#app',
   data: {
-    message: 'holi',
+    mensaje: '',
+    mensajes: [],
     celdas: [],
     fichas: [],
     turnoActual: 1,
@@ -128,6 +129,15 @@ const app = new Vue({
       let char = String.fromCharCode(e.keyCode);
       if(/^[A-Za-z0-9]+$/.test(char)) return true;
       else e.preventDefault();
+    },
+
+    enviarMensaje: function() {
+      if (this.mensaje === '') {
+        return;
+      }
+
+      this.socket.emit('chat-message', {sala: this.salaActiva, mensaje: this.mensaje, jugador: this.jugadorAsignado})
+      this.mensaje = '';
     }
     
   },
@@ -178,8 +188,11 @@ const app = new Vue({
         clearInterval(this.keepAlive); 
         this.reiniciar();
       }
-    })
+    });
 
+    this.socket.on('chat-message', mensaje => {
+      this.mensajes.push({jugador: mensaje.jugador, mensaje: mensaje.mensaje});
+    })
 
 
   },

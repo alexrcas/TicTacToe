@@ -61,6 +61,10 @@ io.on('connection', socket => {
         if (allSockets.size < 2) {
             socket.leave(roomCode);
         }
-    })
+    });
+
+    socket.on('chat-message', async(message) => {
+        io.in(message.sala).emit('chat-message', {jugador: message.jugador, mensaje: message.mensaje});
+    });
 
 })

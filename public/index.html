@@ -57,12 +57,14 @@
     <div class="container chat border">
 
       <div class="mensajes">
-        <div class="mensaje row p-2 m-2">holi</div>
+        <div v-for="mensaje in mensajes" :class="{'mensaje mensaje-red' : mensaje.jugador == 1, 'mensaje mensaje-blue' : mensaje.jugador == 2}">
+          <p>{{mensaje.mensaje}}</p>
+        </div>
       </div>
 
       <div class="input-box">
         <div>
-          <input type="text" class="form-control" id="mensajeInput" placeholder="Escribe aquí...">
+          <input type="text" class="form-control" id="mensajeInput" placeholder="Escribe aquí..." v-on:keyup.enter="enviarMensaje()" v-model="mensaje">
         </div>
       </div>
 
