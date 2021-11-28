@@ -24,7 +24,8 @@ const app = new Vue({
     fichas: [],
     turnoActual: 1,
     colorTurno: ['rojas', 'azules'],
-    fichaSeleccionada: {}
+    fichaSeleccionada: {},
+    socket: {}
   },
   
   methods: {
@@ -50,7 +51,7 @@ const app = new Vue({
       if (this.turnoActual != ficha.player) {
         return;
       }
-      this.fichas.map(ficha => ficha.selected = false);
+      this.fichas.map(f => f.selected = false);
       this.fichaSeleccionada = ficha;
       ficha.selected = true;
     },
@@ -99,6 +100,10 @@ const app = new Vue({
     
     
     
+  },
+
+  created() {
+    this.socket = io();
   },
  
   
