@@ -78,6 +78,10 @@ const app = new Vue({
       if (!this.isMovimientoValido(celda)) {
         return;
       }
+
+      if (this.victoria) {
+        return;
+      }
       
       celda.ficha = this.fichaSeleccionada;
       
@@ -85,7 +89,8 @@ const app = new Vue({
       this.fichaSeleccionada.selected = false;
       this.fichaSeleccionada = {};
       this.comprobarVictoria();
-      if (this.victoria == true) {
+      if (this.victoria) {
+        this.socket.emit('win', this.salaActiva)
         return;
       }
       this.turnoActual = (this.turnoActual % 2) + 1;
@@ -117,6 +122,7 @@ const app = new Vue({
       this.mensajes = [];
       this.crearFichas();
       this.crearCeldas();
+      this.victoria = false;
       this.socket.emit('reset-game', {sala: this.codigoSala, jugador: this.colorJugadorAsignado[this.jugadorAsignado - 1]})
     },
     
@@ -194,7 +200,6 @@ const app = new Vue({
 
     comprobarDiagonalNullSafe: function() {
       for (let i = 0; i < 3; i++) {
-        console.log((i * 3) + i)
         if (this.celdas[(i * 3) + i].ficha == null) {
           return;
         }
@@ -262,7 +267,6 @@ const app = new Vue({
     });
 
     this.socket.on('movement', movement => {
-      console.log('movimiento')
       this.celdas = movement.celdas;
       this.fichas = movement.fichas;
       this.turnoActual = movement.turnoActual;
@@ -287,7 +291,12 @@ const app = new Vue({
       this.celdas = [];
       this.crearFichas();
       this.crearCeldas();
+      this.victoria = false;
       this.turnoActual = 1;
+    });
+
+    this.socket.on('win', () => {
+      this.victoria = true;
     })
 
 
