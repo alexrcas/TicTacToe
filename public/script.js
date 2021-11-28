@@ -30,7 +30,9 @@ const app = new Vue({
     codigoSala: '',
     salaActiva: '',
     jugadorAsignado: 0,
-    isRivalConectado: false
+    isRivalConectado: false,
+    mensajeErrorSocket: '',
+    keepAlive: {}
   },
   
   methods: {
@@ -120,6 +122,12 @@ const app = new Vue({
 
     enviarMovimiento: function() {
       this.socket.emit('movement', {sala: this.salaActiva, celdas: this.celdas, fichas: this.fichas, turnoActual: this.turnoActual})
+    },
+
+    isAlfanumerico(e) {
+      let char = String.fromCharCode(e.keyCode);
+      if(/^[A-Za-z0-9]+$/.test(char)) return true;
+      else e.preventDefault();
     }
     
   },
@@ -129,29 +137,50 @@ const app = new Vue({
 
     this.socket.on('create-room', codigoSala => {
       if (codigoSala == 'error') {
+        this.mensajeErrorSocket = 'Error creando la sala. Puede que ese nombre ya esté en uso'
         throw new Error(`Error creando la sala. Ya existe una sala con el nombre ${codigoSala}`)
       }
+      this.mensajeErrorSocket = '';
       this.salaActiva = codigoSala;
       this.jugadorAsignado = 1;
     });
 
     this.socket.on('join-room', codigoSala => {
       if (codigoSala == 'error') {
+        this.mensajeErrorSocket = 'Error uniéndose a la sala. Puede que la sala no exista'
         throw new Error(`Error uniendose a la sala`)
       }
+      this.mensajeErrorSocket = '';
       this.salaActiva = codigoSala
       this.jugadorAsignado = 2;
     });
 
     this.socket.on('start-game', () => {
       this.isRivalConectado = true;
+
+      this.keepAlive = setInterval(() => {
+        this.socket.emit('keep-alive', this.salaActiva);
+      }, 3000)
     });
 
     this.socket.on('movement', movement => {
+      console.log('movimiento')
       this.celdas = movement.celdas;
       this.fichas = movement.fichas;
       this.turnoActual = movement.turnoActual;
+    });
+
+    this.socket.on('keep-alive', numberOfClients => {
+      if (numberOfClients < 2) {
+        this.isRivalConectado = false;
+        this.mensajeErrorSocket = 'El rival se ha desconectado'
+        this.salaActiva = '';
+        clearInterval(this.keepAlive); 
+        this.reiniciar();
+      }
     })
+
+
 
   },
  
@@ -159,6 +188,7 @@ const app = new Vue({
   beforeMount() {
     this.crearCeldas();
     this.crearFichas();
+
   }
   
   

@@ -26,6 +26,11 @@
     <h6 v-if="salaActiva != ''">Conectado a la sala "{{codigoSala}}"</h6>
   </div>
  
+  <div class="container d-flex justify-content-center">
+    <div class="alert alert-danger" v-if="mensajeErrorSocket != ''">
+      {{mensajeErrorSocket}}
+    </div>
+  </div>
 
   <div v-if="salaActiva != ''">
 
@@ -94,8 +99,15 @@
           <form>
             <div class="mb-3">
               <label for="codigoSala" class="form-label">Nombre de la sala</label>
-              <input type="text" id="codigoSala" v-model="codigoSala" class="form-control" id="codigoSala" aria-describedby="emailHelp" name="codigoSala">
+              <input type="text"
+              id="codigoSala"
+              v-model="codigoSala"
+              v-on:keypress="isAlfanumerico($event)"
+               class="form-control" id="codigoSala"
+               aria-describedby="emailHelp"
+               name="codigoSala">
             </div>
+            <div id="emailHelp" class="form-text">Solo caracteres alfanuméricos</div>
           </form>
         </div>
 

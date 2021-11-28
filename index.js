@@ -49,9 +49,18 @@ io.on('connection', socket => {
         socket.join(roomCode);
         socket.emit('join-room', roomCode);
         io.to(roomCode).emit('start-game')
-    })
+    });
 
     socket.on('movement', async(movement) => {
         io.to(movement.sala).emit('movement', movement);
+    });
+
+    socket.on('keep-alive', async (roomCode) => {
+        let allSockets = await socket.in(roomCode).allSockets();
+        io.to(roomCode).emit('keep-alive', allSockets.size);
+        if (allSockets.size < 2) {
+            socket.leave(roomCode);
+        }
     })
+
 })
