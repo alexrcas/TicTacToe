@@ -29,7 +29,8 @@ const app = new Vue({
     socket: {},
     codigoSala: '',
     salaActiva: '',
-    jugadorAsignado: 0
+    jugadorAsignado: 0,
+    isRivalConectado: false
   },
   
   methods: {
@@ -137,6 +138,10 @@ const app = new Vue({
       }
       this.salaActiva = codigoSala
       this.jugadorAsignado = 2;
+    });
+
+    this.socket.on('start-game', () => {
+      this.isRivalConectado = true;
     });
 
     this.socket.on('movement', movement => {

@@ -20,16 +20,24 @@
       </div>
   </div>
 
-  {{turnoActual}} - {{jugadorAsignado}}
   <div class="container d-flex justify-content-center">
     <h4 v-if="salaActiva === ''">No conectado</h4>
     <h4 v-if="salaActiva != ''">Conectado a la sala "{{codigoSala}}"</h4>
+  </div>
+ 
+  <div class="container d-flex justify-content-center">
     <h4 v-if="salaActiva != ''"> Eres el jugador {{colorJugadorAsignado[jugadorAsignado - 1]}}</h4>
   </div>
  
- 
+
+  <div v-if="salaActiva != ''">
+
   <div class="container d-flex justify-content-center">
     <h4>Mueven {{colorTurno[turnoActual - 1]}} </h4>
+  </div>
+
+  <div v-if="!isRivalConectado" class="container d-flex justify-content-center">
+    <h2>Esperando jugadores...</h2>
   </div>
  
   <div class="container d-flex flex-row game-panel mt-4">
@@ -65,6 +73,8 @@
            </div>
     </div>
   </div>
+
+</div>
 
 
   <!-- Connection Modal -->

@@ -48,6 +48,7 @@ io.on('connection', socket => {
 
         socket.join(roomCode);
         socket.emit('join-room', roomCode);
+        io.to(roomCode).emit('start-game')
     })
 
     socket.on('movement', async(movement) => {
