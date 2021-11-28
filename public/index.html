@@ -22,8 +22,8 @@
   
 
   <div class="container d-flex justify-content-center">
-    <h4 v-if="salaActiva === ''">No conectado</h4>
-    <h4 v-if="salaActiva != ''">Conectado a la sala "{{codigoSala}}"</h4>
+    <h6 v-if="salaActiva === ''">No conectado</h6>
+    <h6 v-if="salaActiva != ''">Conectado a la sala "{{codigoSala}}"</h6>
   </div>
  
 
@@ -90,11 +90,19 @@
           <h5 class="modal-title" id="exampleModalLabel">Conectar</h5>
         </div>
         <div class="modal-body">
-          <input v-model="codigoSala" type="text" name="codigoSala" id="codigoSala">
+
+          <form>
+            <div class="mb-3">
+              <label for="codigoSala" class="form-label">Nombre de la sala</label>
+              <input type="text" id="codigoSala" v-model="codigoSala" class="form-control" id="codigoSala" aria-describedby="emailHelp" name="codigoSala">
+            </div>
+          </form>
         </div>
+
+
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="crearSala()">Crear sala</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="unirseSala()">Unirse a la sala</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="crearSala()">Crear sala</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="unirseSala()">Unirse a la sala</button>
         </div>
       </div>
     </div>

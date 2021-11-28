@@ -53,6 +53,9 @@ const app = new Vue({
     },
     
     seleccionar: function(ficha) {
+      if (!this.isRivalConectado) {
+        return;
+      }
       if (this.turnoActual != this.jugadorAsignado) {
         return;
       }
