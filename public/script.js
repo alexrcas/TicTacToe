@@ -33,7 +33,8 @@ const app = new Vue({
     jugadorAsignado: 0,
     isRivalConectado: false,
     mensajeErrorSocket: '',
-    keepAlive: {}
+    keepAlive: {},
+    victoria: false
   },
   
   methods: {
@@ -83,6 +84,10 @@ const app = new Vue({
       this.fichas = this.fichas.filter(ficha => ficha !== this.fichaSeleccionada);
       this.fichaSeleccionada.selected = false;
       this.fichaSeleccionada = {};
+      this.comprobarVictoria();
+      if (this.victoria == true) {
+        return;
+      }
       this.turnoActual = (this.turnoActual % 2) + 1;
       this.enviarMovimiento();
     },
@@ -139,7 +144,89 @@ const app = new Vue({
       }
       this.socket.emit('chat-message', {sala: this.salaActiva, mensaje: this.mensaje, jugador: this.jugadorAsignado})
       this.mensaje = '';
+    },
+
+
+    comprobarVictoria: function() {
+      for (let i = 0; i < 3; i++) {
+        this.comprobarFilaNullSafe(i);
+        this.comprobarColumnaNullSafe(i)
+      }
+      this.comprobarDiagonalNullSafe();
+      this.comprobarDiagonalSecundariaNullSafe();
+    },
+    
+
+    comprobarFilaNullSafe: function(fila) {
+      let indiceFila = 3 * fila;
+      for (let i = 0; i < 3; i++) {
+        if (this.celdas[i + indiceFila].ficha == null) {
+          return;
+        }
+      }
+      let a = this.celdas[0 + indiceFila].ficha.player;
+      let b = this.celdas[1 + indiceFila].ficha.player;
+      let c = this.celdas[2 + indiceFila].ficha.player;
+      if (a == b) {
+        if (b == c) {
+          this.victoria = true;
+        }
+      }
+    },
+    
+
+    comprobarColumnaNullSafe: function(columna) {
+      for (let i = 0; i < 3; i++) {
+        if (this.celdas[(i * 3) + columna].ficha == null) {
+          return;
+        }
+      }
+      let a = this.celdas[0 + columna].ficha.player;
+      let b = this.celdas[3 + columna].ficha.player;
+      let c = this.celdas[6 + columna].ficha.player;
+      if (a == b) {
+        if (b == c) {
+          this.victoria = true;
+        }
+      }
+    },
+    
+
+    comprobarDiagonalNullSafe: function() {
+      for (let i = 0; i < 3; i++) {
+        console.log((i * 3) + i)
+        if (this.celdas[(i * 3) + i].ficha == null) {
+          return;
+        }
+      }
+        
+        let a = this.celdas[0].ficha.player;
+        let b = this.celdas[4].ficha.player;
+        let c = this.celdas[8].ficha.player;
+        if (a == b) {
+          if (b == c) {
+            this.victoria = true;
+          }
+        }
+    },
+
+
+    comprobarDiagonalSecundariaNullSafe: function() {
+        
+      if(this.celdas[2].ficha == null) {return}
+      if(this.celdas[4].ficha == null) {return}
+      if(this.celdas[6].ficha == null) {return}
+  
+      let a = this.celdas[2].ficha.player;
+      let b = this.celdas[4].ficha.player;
+      let c = this.celdas[6].ficha.player;
+      if (a == b) {
+        if (b == c) {
+          this.victoria = true;
+        }
+      }
     }
+
     
   },
 
