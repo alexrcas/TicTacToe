@@ -6,7 +6,7 @@ limitado de fichas de distinto tamaño. **Un jugador puede eliminar y ocupar el 
 nueva variable en la estrategia de juego.
 
 ### Nota sobre el proyecto
-No debe tomarse el código de este proyecto como referencia, pues fue realizado en una única sesión como entretenimiento y con el único propósito de lograr un resultado final en el menor tiempo posible. En este proyecto no se aplican muchas de las buenas prácticas fundamentales a nivel de diseño, arquitectura o implementación ni se han tenido en cuenta aspectos como la escalabilidad o la seguridad.
+No debe tomarse el código de este proyecto como referencia, pues fue realizado en una única sesión como entretenimiento y con el único propósito de lograr un prototipo en el menor tiempo posible. En este proyecto no se aplican muchas de las buenas prácticas fundamentales a nivel de diseño, arquitectura o implementación ni se han tenido en cuenta aspectos como la escalabilidad o la seguridad.
 
 ### Tecnologías empleadas
 
@@ -19,6 +19,14 @@ No debe tomarse el código de este proyecto como referencia, pues fue realizado 
 * VueJS
 * SocketIO
 * Bootstrap
+
+### Desplegar el proyecto
+1. Descargar el repositorio y situarse en la carpeta del mismo.
+2. Instalar las dependencias (solo la primera vez) y ejecutar el proyecto:
+```
+npm i
+npm run start
+```
 
 ### Demostración (click en la imagen para abrir el vídeo)
 
