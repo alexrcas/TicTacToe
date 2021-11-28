@@ -6,7 +6,7 @@ limitado de fichas de distinto tamaño. **Un jugador puede eliminar y ocupar el 
 nueva variable en la estrategia de juego.
 
 ### Nota sobre el proyecto
-Aviso bla bla bla
+No debe tomarse el código de este proyecto como referencia, pues fue realizado en una única sesión con el único propósito de avanzar lo máximo posible en el menor tiempo posible. En este proyecto no se aplican muchas de las buenas prácticas fundamentales a nivel de diseño, arquitectura o implementación.
 
 ### Tecnologías empleadas
 
