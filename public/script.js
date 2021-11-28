@@ -109,6 +109,7 @@ const app = new Vue({
       this.turnoActual = 1;
       this.fichas = [];
       this.celdas = [];
+      this.mensajes = [];
       this.crearFichas();
       this.crearCeldas();
     },
@@ -157,7 +158,7 @@ const app = new Vue({
 
     this.socket.on('join-room', codigoSala => {
       if (codigoSala == 'error') {
-        this.mensajeErrorSocket = 'Error uniéndose a la sala. Puede que la sala no exista'
+        this.mensajeErrorSocket = 'Error uniéndose a la sala. La sala no existe o está llena'
         throw new Error(`Error uniendose a la sala`)
       }
       this.mensajeErrorSocket = '';

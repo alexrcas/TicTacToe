@@ -87,7 +87,7 @@ html, body {
 }
 
 .mensaje-blue > * {
-  background-color: #345995; !important;
+  background-color: #345995 !important;
   border-radius: 10px;
   color: white;
   padding: 8px;

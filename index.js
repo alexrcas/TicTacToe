@@ -45,6 +45,11 @@ io.on('connection', socket => {
             socket.emit('join-room', 'error');
             return;
         }
+        if (numberOfClientsInRoom > 1) {
+            console.log(`La sala está llena. Cód. sala: ${roomCode}`)
+            socket.emit('join-room', 'error');
+            return;
+        }
 
         socket.join(roomCode);
         socket.emit('join-room', roomCode);
