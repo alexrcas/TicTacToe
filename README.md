@@ -27,6 +27,8 @@ No debe tomarse el código de este proyecto como referencia, pues fue realizado 
 npm i
 npm run start
 ```
+### Prueba la aplicación
+![Enlace](https://alexrcas-tictactoe.herokuapp.com/)
 
 ### Demostración (click en la imagen para abrir el vídeo)
 
