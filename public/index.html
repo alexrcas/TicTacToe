@@ -15,10 +15,18 @@
   <div id="app" class="container-fluid d-flex flex-column justify-content-center mt-4">
     <div class="container d-flex justify-content-end">
       <div class="botonera">
-        <button @click="reiniciar()" class="btn btn-warning">Reiniciar</button>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Instrucciones</button>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#connectModal">Conectar</button>
       </div>
   </div>
+
+  {{turnoActual}} - {{jugadorAsignado}}
+  <div class="container d-flex justify-content-center">
+    <h4 v-if="salaActiva === ''">No conectado</h4>
+    <h4 v-if="salaActiva != ''">Conectado a la sala "{{codigoSala}}"</h4>
+    <h4 v-if="salaActiva != ''"> Eres el jugador {{colorJugadorAsignado[jugadorAsignado - 1]}}</h4>
+  </div>
+ 
  
   <div class="container d-flex justify-content-center">
     <h4>Mueven {{colorTurno[turnoActual - 1]}} </h4>
@@ -57,6 +65,26 @@
            </div>
     </div>
   </div>
+
+
+  <!-- Connection Modal -->
+  <div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Conectar</h5>
+        </div>
+        <div class="modal-body">
+          <input v-model="codigoSala" type="text" name="codigoSala" id="codigoSala">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="crearSala()">Crear sala</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="unirseSala()">Unirse a la sala</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 

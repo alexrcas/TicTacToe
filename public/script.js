@@ -24,8 +24,12 @@ const app = new Vue({
     fichas: [],
     turnoActual: 1,
     colorTurno: ['rojas', 'azules'],
+    colorJugadorAsignado: ['rojo', 'azul'],
     fichaSeleccionada: {},
-    socket: {}
+    socket: {},
+    codigoSala: '',
+    salaActiva: '',
+    jugadorAsignado: 0
   },
   
   methods: {
@@ -48,6 +52,9 @@ const app = new Vue({
     },
     
     seleccionar: function(ficha) {
+      if (this.turnoActual != this.jugadorAsignado) {
+        return;
+      }
       if (this.turnoActual != ficha.player) {
         return;
       }
@@ -70,6 +77,7 @@ const app = new Vue({
       this.fichaSeleccionada.selected = false;
       this.fichaSeleccionada = {};
       this.turnoActual = (this.turnoActual % 2) + 1;
+      this.enviarMovimiento();
     },
     
     
@@ -98,12 +106,45 @@ const app = new Vue({
       this.crearCeldas();
     },
     
-    
+    crearSala: function() {
+      this.socket.emit('create-room', this.codigoSala);
+    },
+
+    unirseSala: function() {
+      this.socket.emit('join-room', this.codigoSala);
+    },
+
+    enviarMovimiento: function() {
+      this.socket.emit('movement', {sala: this.salaActiva, celdas: this.celdas, fichas: this.fichas, turnoActual: this.turnoActual})
+    }
     
   },
 
   created() {
     this.socket = io();
+
+    this.socket.on('create-room', codigoSala => {
+      if (codigoSala == 'error') {
+        throw new Error(`Error creando la sala. Ya existe una sala con el nombre ${codigoSala}`)
+      }
+      this.salaActiva = codigoSala;
+      this.jugadorAsignado = 1;
+    });
+
+    this.socket.on('join-room', codigoSala => {
+      if (codigoSala == 'error') {
+        throw new Error(`Error uniendose a la sala`)
+      }
+      this.salaActiva = codigoSala
+      this.jugadorAsignado = 2;
+    });
+
+    this.socket.on('movement', movement => {
+      this.celdas = movement.celdas;
+      this.fichas = movement.fichas;
+      this.turnoActual = movement.turnoActual;
+    })
+
   },
  
   
